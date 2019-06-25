@@ -1,0 +1,100 @@
+dist: trusty
+sudo: true
+  #
+language: c
+  #
+notifications:
+  email: false
+  #
+before_install:
+  #
+  # Fetch the tag information for the current branch
+  - git fetch origin --tags
+  #
+  # Publish the buildroot script folder
+  - chmod +x ${TRAVIS_BUILD_DIR}/buildroot/bin/*
+  - export PATH=${TRAVIS_BUILD_DIR}/buildroot/bin/:${PATH}
+  #
+  # Start fb X server
+  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_1.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :1 -ac -screen 0 1280x1024x16"
+  - sleep 3
+  - export DISPLAY=:1.0
+  #
+install:
+  #
+  # Install arduino 1.8.5
+  - wget http://downloads-02.arduino.cc/arduino-1.8.5-linux64.tar.xz
+  - tar xf arduino-1.8.5-linux64.tar.xz
+  - sudo mv arduino-1.8.5 /usr/local/share/arduino
+  - ln -s /usr/local/share/arduino/arduino ${TRAVIS_BUILD_DIR}/buildroot/bin/arduino
+  #
+  # Install: LiquidCrystal_I2C library
+  - git clone https://github.com/kiyoshigawa/LiquidCrystal_I2C.git
+  - mv LiquidCrystal_I2C/LiquidCrystal_I2C /usr/local/share/arduino/libraries/LiquidCrystal_I2C
+  #
+  # Install: LiquidTWI2 library
+  - git clone https://github.com/lincomatic/LiquidTWI2.git
+  - sudo mv LiquidTWI2 /usr/local/share/arduino/libraries/LiquidTWI2
+  #
+  # Install: Monochrome Graphics Library for LCDs and OLEDs
+  - git clone https://github.com/olikraus/U8glib_Arduino.git
+  - sudo mv U8glib_Arduino /usr/local/share/arduino/libraries/U8glib
+  #
+  # Install: L6470 Stepper Motor Driver library
+  # - git clone https://github.com/ameyer/Arduino-L6470.git
+  # - sudo mv Arduino-L6470/L6470 /usr/local/share/arduino/libraries/L6470
+  #
+  # Install: TMC26X Stepper Motor Controller library
+  # - git clone https://github.com/trinamic/TMC26XStepper.git
+  # - sudo mv TMC26XStepper /usr/local/share/arduino/libraries/TMC26XStepper
+  #
+  # Install: TMC2130 Stepper Motor Controller library
+  - git clone https://github.com/teemuatlut/TMC2130Stepper.git
+  - sudo mv TMC2130Stepper /usr/local/share/arduino/libraries/TMC2130Stepper
+  #
+  # Install: TMC2208 Stepper Motor Controller library
+  - git clone https://github.com/teemuatlut/TMC2208Stepper.git
+  - sudo mv TMC2208Stepper /usr/local/share/arduino/libraries/TMC2208Stepper
+  #
+  # Install: Adafruit Neopixel library
+  - git clone https://github.com/adafruit/Adafruit_NeoPixel.git
+  - sudo mv Adafruit_NeoPixel /usr/local/share/arduino/libraries/Adafruit_NeoPixel
+  #
+before_script:
+  #
+  # Change current working directory to the build dir
+  - cd ${TRAVIS_BUILD_DIR}
+  #
+  # Generate custom version include
+  - generate_version_header_for_marlin ${TRAVIS_BUILD_DIR}/Marlin
+  - cat ${TRAVIS_BUILD_DIR}/Marlin/_Version.h
+  #
+script:
+  #
+  # Backup Configuration.h, Configuration_adv.h, and pins_RAMPS.h
+  #
+  - cp Marlin/Configuration.h Marlin/Configuration.h.backup
+  - cp Marlin/Configuration_adv.h Marlin/Configuration_adv.h.backup
+  - cp Marlin/pins_TRIGORILLA_14.h Marlin/pins_TRIGORILLA_14.h.backup
+  #
+  # Build with the default configurations
+  #
+  - build_marlin
+  #
+
+  ######## Example Configurations ##############
+  #
+  # Anycubic i3 Mega with BLtouch
+  #
+  #- Test compatibility to https://github.com/MNieddu91/Marlin-AI3M-BLTouch
+  #
+  - use_example_configs Anycubic/Ai3MBLtouch
+  - build_marlin
+  #
+  # Anycubic i3 Mega with 12864 display
+  #
+  #- Test compatibility to RepRapDiscount FULL GRAPHIC Smart Controller
+  #
+  - use_example_configs Anycubic/Ai3M12864
+  - build_marlin
+  #
