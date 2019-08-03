@@ -49,14 +49,14 @@
 // Z Probe (when not Z_MIN_PIN)
 //
 #ifndef Z_MIN_PROBE_PIN
-  #define Z_MIN_PROBE_PIN  P1_24
+  #define Z_MIN_PROBE_PIN  P1_28 //### Probe x-max
 #endif
 
 //
 // Filament Runout Sensor
 //
 #ifndef FIL_RUNOUT_PIN
-  #define FIL_RUNOUT_PIN   P1_26 // ### // 24 
+  #define FIL_RUNOUT_PIN   P1_26 // ### Y-Max
 #endif
 
 //
@@ -66,7 +66,7 @@
 #define X_DIR_PIN          P2_06
 #define X_ENABLE_PIN       P2_01
 #ifndef X_CS_PIN
-  #define X_CS_PIN         P1_17
+#define X_CS_PIN           P1_17
 #endif
 
 #define Y_STEP_PIN         P0_19
@@ -181,14 +181,14 @@
 //
 // Heaters / Fans
 //
-#define HEATER_0_PIN       P2_07
+#define HEATER_0_PIN       P2_07 // ok // Hotend
 #if HOTENDS == 1
-  #define FAN1_PIN         P2_04
+  #define FAN1_PIN         P2_04 // fan1
 #else
   #define HEATER_1_PIN     P2_04
 #endif
-#define FAN_PIN            P2_03
-#define HEATER_BED_PIN     P2_05
+#define FAN_PIN            P2_03 // fan
+#define HEATER_BED_PIN     P2_05 // bed
 
 /**
  *              _____                                             _____
