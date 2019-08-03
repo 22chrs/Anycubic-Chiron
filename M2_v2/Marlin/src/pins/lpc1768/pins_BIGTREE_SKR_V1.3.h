@@ -183,11 +183,11 @@
 //
 #define HEATER_0_PIN       P2_07 // ok // Hotend
 #if HOTENDS == 1
-  #define FAN1_PIN         P2_04 // fan1
+  #define FAN1_PIN         P2_04 // fan hotend
 #else
   #define HEATER_1_PIN     P2_04
 #endif
-#define FAN_PIN            P2_03 // fan
+#define FAN_PIN            P2_03 // fan Bauteollüfter
 #define HEATER_BED_PIN     P2_05 // bed
 
 /**
