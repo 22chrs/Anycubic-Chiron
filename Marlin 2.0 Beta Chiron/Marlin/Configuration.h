@@ -675,10 +675,10 @@
 #define Z_DRIVER_TYPE  TMC2208 // ###
 //#define X2_DRIVER_TYPE A4988
 //#define Y2_DRIVER_TYPE A4988
-//#define Z2_DRIVER_TYPE TMC2208 // ###
+#define Z2_DRIVER_TYPE TMC2208 // ###
 //#define Z3_DRIVER_TYPE A4988
 #define E0_DRIVER_TYPE LV8729 // ###
-#define E1_DRIVER_TYPE TMC2208 // ###
+//#define E1_DRIVER_TYPE TMC2208 // ###
 //#define E2_DRIVER_TYPE A4988
 //#define E3_DRIVER_TYPE A4988
 //#define E4_DRIVER_TYPE A4988
@@ -1022,13 +1022,13 @@
 #define INVERT_X_DIR true // ###
 #define INVERT_Y_DIR true // ###
 #define INVERT_Z_DIR false
+#define INVERT_Z2_DIR false // ###
 
 // @section extruder
 
 // For direct drive extruder v9 set to true, for geared extruder set to false.
 #define INVERT_E0_DIR false
-#define INVERT_Z2_DIR false // Z // ###
-#define INVERT_E1_DIR false // Z // ###
+#define INVERT_E1_DIR false
 #define INVERT_E2_DIR false
 #define INVERT_E3_DIR false
 #define INVERT_E4_DIR false
@@ -1100,10 +1100,10 @@
  * For other boards you may need to define FIL_RUNOUT_PIN, FIL_RUNOUT2_PIN, etc.
  * By default the firmware assumes HIGH=FILAMENT PRESENT.
  */
-// #define FILAMENT_RUNOUT_SENSOR // ### buggy
+#define FILAMENT_RUNOUT_SENSOR // ### 
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
   #define NUM_RUNOUT_SENSORS   1     // Number of sensors, up to one per extruder. Define a FIL_RUNOUT#_PIN for each.
-  #define FIL_RUNOUT_INVERTING false // Set to true to invert the logic of the sensor.
+  #define FIL_RUNOUT_INVERTING true // Set to true to invert the logic of the sensor.
   #define FIL_RUNOUT_PULLUP          // Use internal pullup for filament runout pins.
   //#define FIL_RUNOUT_PULLDOWN      // Use internal pulldown for filament runout pins.
 
@@ -2147,9 +2147,9 @@
 //#define RGBW_LED
 
 #if EITHER(RGB_LED, RGBW_LED)
-  #define RGB_LED_R_PIN 25
-  #define RGB_LED_G_PIN 27
-  #define RGB_LED_B_PIN 29
+  #define RGB_LED_R_PIN P1_21 //###
+  #define RGB_LED_G_PIN P1_22 //###
+  #define RGB_LED_B_PIN P1_23 //###
   #define RGB_LED_W_PIN -1
 #endif
 
