@@ -270,7 +270,7 @@ void MarlinUI::init_lcd() {
     refresh_contrast();
   #endif
   
-//u8g.setContrast(255);
+u8g.setContrast(255); //###
 
 
   #if ENABLED(LCD_SCREEN_ROT_90)

@@ -926,7 +926,7 @@
    * an option on the LCD screen to continue the print from the last-known
    * point in the file.
    */
-  #define POWER_LOSS_RECOVERY // ###
+  //#define POWER_LOSS_RECOVERY // ### buggy?
   #if ENABLED(POWER_LOSS_RECOVERY)
     //#define POWER_LOSS_PIN         44 // Pin to detect power loss
     //#define POWER_LOSS_STATE     HIGH // State of pin indicating power loss
@@ -1489,7 +1489,7 @@
  * Requires NOZZLE_PARK_FEATURE.
  * This feature is required for the default FILAMENT_RUNOUT_SCRIPT.
  */
-#define ADVANCED_PAUSE_FEATURE // ### buggy
+#define ADVANCED_PAUSE_FEATURE // ### buggy?
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
   #define PAUSE_PARK_RETRACT_FEEDRATE         60  // (mm/s) Initial retract feedrate.
   #define PAUSE_PARK_RETRACT_LENGTH            2  // (mm) Initial retract.
@@ -1648,7 +1648,7 @@
 
   #if AXIS_IS_TMC(X)
     #define X_CURRENT     1000  // (mA) RMS current. Multiply by 1.414 for peak current. // ###
-    #define X_MICROSTEPS   256  // 0..256 //16
+    #define X_MICROSTEPS   128  // 0..256 //16
     #define X_RSENSE     0.11
   #endif
 
@@ -1660,7 +1660,7 @@
 
   #if AXIS_IS_TMC(Y)
     #define Y_CURRENT     1200 //###
-    #define Y_MICROSTEPS   256 //###
+    #define Y_MICROSTEPS   128 //###
     #define Y_RSENSE     0.11
   #endif
 
@@ -1672,13 +1672,13 @@
 
   #if AXIS_IS_TMC(Z)
     #define Z_CURRENT     1000
-    #define Z_MICROSTEPS   256 //16
+    #define Z_MICROSTEPS   64 //16
     #define Z_RSENSE     0.11
   #endif
 
   #if AXIS_IS_TMC(Z2)
     #define Z2_CURRENT    1000
-    #define Z2_MICROSTEPS  256 //16
+    #define Z2_MICROSTEPS  64 //16
     #define Z2_RSENSE    0.11
   #endif
 
@@ -2304,15 +2304,26 @@
 /**
  * User-defined menu items that execute custom GCode
  */
-//#define CUSTOM_USER_MENUS
+#define CUSTOM_USER_MENUS //###
 #if ENABLED(CUSTOM_USER_MENUS)
-  //#define CUSTOM_USER_MENU_TITLE "Custom Commands"
+  #define CUSTOM_USER_MENU_TITLE "Custom Commands"
   #define USER_SCRIPT_DONE "M117 User Script Done"
   #define USER_SCRIPT_AUDIBLE_FEEDBACK
   //#define USER_SCRIPT_RETURN  // Return to status screen after a script
 
-  #define USER_DESC_1 "Home & UBL Info"
-  #define USER_GCODE_1 "G28\nG29 W"
+  #define USER_DESC_1 "Load EEPROM SETTINGS" //###
+  #define USER_GCODE_1 "M502" //###
+
+  #define USER_DESC_2 "Save to EEPROM" //###
+  #define USER_GCODE_2 "M500" //###
+
+  #define USER_DESC_3 "NOZZLE -0.1" //### // UBL Mesh +0.1 näher zur Nozzle
+  #define USER_GCODE_3 "G29 P6 C +0.1\n G29 S0\n G29 A\n M500" //###
+
+  #define USER_DESC_4 "NOZZLE +0.1" //### // UBL Mesh -0.1 von der Nozzle entfernen
+  #define USER_GCODE_4 "G29 P6 C -0.1\n G29 S0\n G29 A\n M500" //###
+
+/*
 
   #define USER_DESC_2 "Preheat for " PREHEAT_1_LABEL
   #define USER_GCODE_2 "M140 S" STRINGIFY(PREHEAT_1_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_1_TEMP_HOTEND)
@@ -2325,6 +2336,8 @@
 
   #define USER_DESC_5 "Home & Info"
   #define USER_GCODE_5 "G28\nM503"
+
+   */
 #endif
 
 /**
