@@ -2318,13 +2318,13 @@
   #define USER_GCODE_2 "M500" //###
 
   #define USER_DESC_3 "NOZZLE -0.05 DOWN" //### // UBL Mesh +0.1 näher zur Nozzle
-  #define USER_GCODE_3 "G29 P6 C +0.05 //###
+  #define USER_GCODE_3 "G29 P6 C +0.05" //###
 
   #define USER_DESC_4 "NOZZLE +0.05 UP" //### // UBL Mesh -0.1 von der Nozzle entfernen
   #define USER_GCODE_4 "G29 P6 C -0.05" //###
 
-    #define USER_DESC_4 "save mesh changes" //### // UBL Mesh -0.1 von der Nozzle entfernen
-  #define USER_GCODE_4 "G29 S0\n G29 A\n M500" //###
+  #define USER_DESC_5 "save mesh changes" //### // UBL Mesh -0.1 von der Nozzle entfernen
+  #define USER_GCODE_5 "G29 S0\n G29 A\n M500" //###
 
 /*
 
